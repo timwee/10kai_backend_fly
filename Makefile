@@ -14,5 +14,7 @@ run:
 	-e "OPENAI_API_KEY=${OPENAI_KEY}" \
 	--name "${RUN_NAME}" "${IMG_NAME}"
 
+notebook:
+	poetry run jupyter notebook
 
-.PHONY: rmi build run
+.PHONY: rmi build run notebook

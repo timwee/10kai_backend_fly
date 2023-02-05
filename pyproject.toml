@@ -6,13 +6,15 @@ name = "app"
 version = "0.1.0"
 
 [tool.poetry.dependencies]
-faiss-cpu = "^1.7.3"
 fastapi = "^0.80.0"
 langchain = "0.0.77"
+numpy = "^1.24.1"
 openai = "^0.26.4"
 python = "^3.11"
-uvicorn = "^0.18.3"
 python-dotenv = "^0.21.1"
+sec-api = "^1.0.14"
+uvicorn = "^0.18.3"
+faiss-cpu = "^1.7.3"
 
 [tool.poetry.scripts]
 start = "app.main:start"

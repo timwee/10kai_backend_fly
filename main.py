@@ -6,13 +6,28 @@ import pickle
 import os
 from langchain_utils import search_doc
 
+from langchain.llms import OpenAI
+from langchain.vectorstores.faiss import FAISS
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain, HypotheticalDocumentEmbedder
+from langchain.llms import OpenAI
+from langchain.chains.question_answering import load_qa_chain
+
 load_dotenv()
 
-def load_docsearch(pth):
-    with open(pth, "rb") as f:
-        return pickle.load(f)
+# def load_docsearch(pth):
+#     with open(pth, "rb") as f:
+#         return pickle.load(f)
+def load_docsearch(pth, fname):
+    with open(os.path.join(pth, f"{fname}.pkl"), "rb") as f:
+        docsearch = pickle.load(f)
+        docsearch.load_local(os.path.join(pth, f"{fname}.idx"))
+        return docsearch
 
-meta_hype = load_docsearch(os.path.join("data", "META_hype.pkl"))
+docsearch = load_docsearch("data", "GOOG_hype")
 
 
 app = FastAPI()
@@ -38,7 +53,7 @@ async def demo_post(inp: Msg):
 
 @app.get("/path/{query}")
 async def query(query: str):
-    answer = search_doc(query, meta_hype, return_only_outputs=True)["output_text"]
+    answer = search_doc(query, docsearch, return_only_outputs=True)["output_text"]
     return {"response": f"{answer}"}
 
 
