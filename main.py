@@ -1,8 +1,19 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import uvicorn
-import dotenv
+from dotenv import load_dotenv
 import pickle
+import os
+from langchain_utils import search_doc
+
+load_dotenv()
+
+def load_docsearch(pth):
+    with open(pth, "rb") as f:
+        return pickle.load(f)
+
+meta_hype = load_docsearch(os.path.join("data", "META_hype.pkl"))
+
 
 app = FastAPI()
 
@@ -25,9 +36,10 @@ async def demo_post(inp: Msg):
     return {"message": inp.msg.upper()}
 
 
-@app.get("/path/{path_id}")
-async def demo_get_path_id(path_id: int):
-    return {"message": f"This is /path/{path_id} endpoint, use post request to retrieve result"}
+@app.get("/path/{query}")
+async def query(query: str):
+    answer = search_doc(query, meta_hype, return_only_outputs=True)["output_text"]
+    return {"response": f"{answer}"}
 
 
 def start():
