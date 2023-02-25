@@ -15,6 +15,7 @@ python-dotenv = "^0.21.1"
 sec-api = "^1.0.14"
 uvicorn = "^0.18.3"
 faiss-cpu = "^1.7.3"
+hypercorn = "^0.14.3"
 
 [tool.poetry.scripts]
 start = "app.main:start"

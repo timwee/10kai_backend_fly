@@ -21,4 +21,5 @@ COPY ./data/* /code/data
 ENV OPENAI_API_KEY=$OPENAI_API_KEY
 
 # 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+# CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["hypercorn", "main:app", "--bind", "[::]:8080"]
