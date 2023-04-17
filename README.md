@@ -1,9 +1,5 @@
 ---
-title: FastAPI
-description: A FastAPI server
-tags:
-  - fastapi
-  - python
+title: Backend for question and answering on 10ks
 ---
 
 # FastAPI Example
